@@ -33,13 +33,6 @@ export default function TabLayout() {
         tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
       }}
       />
-      <Tabs.Screen
-      name="(store)/index"
-      options={{
-        title: 'Criar Demanda',
-        tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-      }}
-      />
     </Tabs>
   );
 }
