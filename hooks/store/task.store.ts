@@ -19,8 +19,6 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
 
       const response = await axios.get(`${API_URL}/tasks`);
 
-      console.log("Tarefas carregadas:", response.data);
-
       set({ tasks: response.data.tasks });
     } catch (error) {
       console.error(error);

@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'; 
 import useTarefaStore from '@/hooks/store/task.store';
 import styles from '@/app/style'; 
-import { X } from 'phosphor-react-native'; // Importe um ícone para fechar (se estiver usando phosphor)
+import { X } from 'phosphor-react-native'; 
 
-// Agora ele aceita uma prop onClose
 export default function FormularioTarefa({ onClose }: any) { 
     
   const [titulo, setTitulo] = useState('');
@@ -17,10 +16,9 @@ export default function FormularioTarefa({ onClose }: any) {
         Alert.alert("Atenção", "Preencha todos os campos!");
         return;
     }
-
+      
     await criaTarefa(titulo, descricao);
     
-    // Limpa os campos
     setTitulo('');
     setDescricao('');
     
