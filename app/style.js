@@ -1,4 +1,3 @@
-// styles.js
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     color: 'white',
     width: '100%',
-    padding: 30,
+    padding: 10,
   },
   listView: {
     backgroundColor: 'white',

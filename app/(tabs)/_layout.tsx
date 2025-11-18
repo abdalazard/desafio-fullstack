@@ -19,8 +19,7 @@ export default function TabLayout() {
       tabBarBackground: TabBarBackground,
       tabBarStyle: Platform.select({
         ios: {
-        // Use a transparent background on iOS to show the blur effect
-        position: 'absolute',
+          position: 'absolute',
         },
         default: {},
       }),
@@ -30,7 +29,11 @@ export default function TabLayout() {
       name="(home)/index"
       options={{
         title: 'Inicio',
+        tabBarLabel: () => null,
         tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+        tabBarItemStyle: {
+          // display: 'none',
+        }
       }}
       />
     </Tabs>

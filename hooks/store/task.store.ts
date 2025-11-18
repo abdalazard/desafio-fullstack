@@ -1,7 +1,9 @@
 import { create } from 'zustand';
+import axios from "axios";
 import TaskStore, { Task } from "./types/task.type";
+import API_URL from '@/utils/api';
 
-export const useDemandaStore = create<TaskStore>((set) => ({
+export const useTarefaStore = create<TaskStore>((set, get) => ({
   task: null,
   tasks: [],
   isLoading: false,
@@ -9,17 +11,42 @@ export const useDemandaStore = create<TaskStore>((set) => ({
   setIsLoading: (isLoading) => set({ isLoading }),
   setError: (error) => set({ error }),
 
-  setDemandas: (tasks: Task[]) => set({ tasks }),
+  setTarefas: (tasks: Task[]) => set({ tasks }),
 
-  fetchDemandas: async () => {
+  fetchTarefas: async () => {
     try {
-      set({ task: null, isLoading: true, error: null });
+      set({ isLoading: true, error: null });
+
+      const response = await axios.get(`${API_URL}/tasks`);
+
+      console.log("Tarefas carregadas:", response.data);
+
+      set({ tasks: response.data.tasks });
     } catch (error) {
+      console.error(error);
       set({ error: "Erro ao carregar as demandas" });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  criaTarefa: async (title: string, description: string) => {
+    try {
+      set({ isLoading: true });
+
+      await axios.post(`${API_URL}/task/create`, {
+        title,
+        description,
+      });
+
+      await get().fetchTarefas();
+    } catch (error) {
+      console.error("Erro ao criar tarefa:", error);
+      set({ error: "Erro ao criar tarefa" });
     } finally {
       set({ isLoading: false });
     }
   },
 }));
 
-export default useDemandaStore;
+export default useTarefaStore;
