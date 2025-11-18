@@ -6,19 +6,29 @@ import {
   Modal, 
 } from 'react-native';
 import FormularioTarefa from '../FormularioTarefa';
+import { Task } from '@/hooks/store/types/task.type';
 
-export default function CriaTarefa() {
+export default function CriaTarefa({ 
+    modalVisible, 
+    onOpen, 
+    onClose, 
+    tarefa 
+}: { 
+    modalVisible: boolean, 
+    onOpen: (tarefa?: Task) => void,
+    onClose: () => void,
+    tarefa: Task | null 
+}) {
     
-  const [modalVisible, setModalVisible] = useState(false); 
 
   const FormularioTarefaUnificado = () => (
-    <FormularioTarefa onClose={() => setModalVisible(false)} />
+    <FormularioTarefa onClose={onClose} tarefa={tarefa}/>
   );
 
   return (
     <View>
       <TouchableOpacity 
-          onPress={() => setModalVisible(true)}
+          onPress={() => onOpen()}
           style={{ backgroundColor: '#000', padding: 15, borderRadius: 50, marginBottom: 30,  alignSelf: 'flex-end', margin: 10 }}
         >
           <Text style={{ color: '#FFF', fontWeight: 'bold', textAlign: 'center' }}>+ Nova Tarefa</Text>
@@ -28,7 +38,7 @@ export default function CriaTarefa() {
         animationType="slide"
         transparent={false} 
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)} 
+        onRequestClose={onClose} 
       >
         <FormularioTarefaUnificado />
       </Modal>

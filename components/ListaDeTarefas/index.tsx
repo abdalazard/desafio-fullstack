@@ -1,11 +1,11 @@
-import { View, Text, FlatList, ActivityIndicator } from 'react-native'; 
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'; 
 import useTarefaStore from '@/hooks/store/task.store';
 import { useEffect } from 'react';
 import styles from '@/app/style';
 
-export default function ListaDeTarefas() {
-    
-  const { tasks, fetchTarefas, isLoading } = useTarefaStore();
+export default function ListaDeTarefas({ onEdit }: { onEdit: (item: any) => void }) {
+  
+  const { fetchTarefas, tasks, isLoading } = useTarefaStore();
 
   useEffect(() => {
     fetchTarefas();
@@ -32,9 +32,14 @@ export default function ListaDeTarefas() {
         data={tasks}
         keyExtractor={(item) => String(item.id)} 
         renderItem={({ item }) => (
-          <View style={{width: '100%', padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
+            <View>
               <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.title}</Text>
               <Text style={{ color: '#555' }}>{item.description}</Text>
+            </View>
+            <TouchableOpacity onPress={() => onEdit(item)} style={{ padding: 5, backgroundColor: '#eee', borderRadius: 5 }}>
+                <Text style={{ color: '#007BFF' }}>Editar</Text>
+            </TouchableOpacity>
           </View>
         )}
       />

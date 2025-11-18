@@ -45,6 +45,24 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
       set({ isLoading: false });
     }
   },
+
+  updateTarefa: async (id: number, title: string, description: string) => {
+    try {
+      set({ isLoading: true, error: null });
+
+      await axios.put(`${API_URL}/task/update/${id}`, {
+        title,
+        description,
+      });
+
+      await get().fetchTarefas();
+    } catch (error) {
+      console.error("Erro ao atualizar tarefa:", error);
+      set({ error: "Erro ao atualizar tarefa" });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
 }));
 
 export default useTarefaStore;
