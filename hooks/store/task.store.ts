@@ -50,7 +50,9 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
     try {
       set({ isLoading: true, error: null });
 
-      await axios.put(`${API_URL}/task/update/${id}`, {
+      // O id é enviado no corpo, e a URL não precisa mais dele no final
+      await axios.put(`${API_URL}/task/update`, {
+        id, // <--- ADICIONADO AQUI
         title,
         description,
       });
@@ -62,7 +64,7 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
     } finally {
       set({ isLoading: false });
     }
-  },
+  }
 }));
 
 export default useTarefaStore;
