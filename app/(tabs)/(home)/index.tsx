@@ -21,7 +21,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.viewContainer, { flexDirection: 'row', justifyContent: 'space-between'}]}>
+      <View style={[styles.viewContainer]}>
         <Text style={[styles.topView]}>Projeto - Teste</Text> 
       </View>
       <CriaTarefa 

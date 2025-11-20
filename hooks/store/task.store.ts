@@ -50,9 +50,8 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
     try {
       set({ isLoading: true, error: null });
 
-      // O id é enviado no corpo, e a URL não precisa mais dele no final
       await axios.put(`${API_URL}/task/update`, {
-        id, // <--- ADICIONADO AQUI
+        id,
         title,
         description,
       });
@@ -64,7 +63,24 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
     } finally {
       set({ isLoading: false });
     }
-  }
+  },
+
+  deletaTarefa: async (id: number) => {
+    try {
+      set({ isLoading: true, error: null });
+
+      await axios.delete(`${API_URL}/task/delete`, {
+        data: { id },
+      });
+
+      await get().fetchTarefas();
+    } catch (error) {
+      console.error("Erro ao deletar tarefa:", error);
+      set({ error: "Erro ao deletar tarefa" });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
 }));
 
 export default useTarefaStore;

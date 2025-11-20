@@ -1,7 +1,7 @@
 export type Task = {
-    id: number;
-    title: string;
-    description: string;
+  id: number;
+  title: string;
+  description: string;
 };
 
 interface TaskStore {
@@ -15,6 +15,8 @@ interface TaskStore {
   fetchTarefas: () => Promise<void>;
   criaTarefa: (title: string, description: string) => Promise<void>;
   updateTarefa: (id: number, title: string, description: string) => Promise<void>;
+  deletaTarefa: (id: number) => Promise<void>;
+
 }
 
 export default TaskStore;
