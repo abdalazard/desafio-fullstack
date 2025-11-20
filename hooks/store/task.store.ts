@@ -13,6 +13,21 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
 
   setTarefas: (tasks: Task[]) => set({ tasks }),
 
+  obtemTarefa: async (taskId: number) => {
+    try {
+      set({ isLoading: true, error: null });
+
+      const response = await axios.get(`${API_URL}/task/${taskId}`);
+
+      set({ task: response.data.task });
+    } catch (error) {
+      console.error(error);
+      set({ error: "Erro ao carregar a demanda" });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
   fetchTarefas: async () => {
     try {
       set({ isLoading: true, error: null });

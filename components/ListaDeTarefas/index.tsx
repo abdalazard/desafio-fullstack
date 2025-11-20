@@ -9,29 +9,27 @@ export default function ListaDeTarefas({ onEdit }: { onEdit: (item: any) => void
   const { deletaTarefa, fetchTarefas, tasks, isLoading } = useTarefaStore();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [taskToDeleteId, setTaskToDeleteId] = useState<number | null>(null);
+  const [taskToDelete, setTaskToDelete] = useState<{ id: number; title: string } | null>(null);
 
   useEffect(() => {
     fetchTarefas();
   }, []);
 
-  const handleDeletePress = (taskId: number) => {
-    setTaskToDeleteId(taskId);
+  const handleDeletePress = (task: { id: number; title: string }) => {
+    setTaskToDelete(task);
     setShowDeleteModal(true);
   };
 
   const handleCloseDeleteModal = () => {
     setShowDeleteModal(false);
-    setTaskToDeleteId(null);
-    fetchTarefas();
+    setTaskToDelete(null);
   };
 
   const handleConfirmDelete = async () => {
-    if (taskToDeleteId !== null) {
+    if (taskToDelete !== null) {
       if (deletaTarefa) {
-        await deletaTarefa(taskToDeleteId);
+        await deletaTarefa(taskToDelete.id);
       }
-
       handleCloseDeleteModal();
     }
   };
@@ -66,7 +64,8 @@ export default function ListaDeTarefas({ onEdit }: { onEdit: (item: any) => void
               <TouchableOpacity onPress={() => onEdit(item)} style={{ padding: 5, backgroundColor: '#ccffcc', borderRadius: 5, marginRight: 10, justifyContent: 'center', borderColor: '#005300ff', borderWidth: 1 }}>
                 <Text style={{ color: '#005300ff', textAlign: 'center', fontWeight: 'bold' }}>Editar</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleDeletePress(item.id)} style={{ padding: 5, backgroundColor: '#ffcccc', borderRadius: 5, justifyContent: 'center', borderColor: '#ff0000', borderWidth: 1 }}>
+
+              <TouchableOpacity onPress={() => handleDeletePress(item)} style={{ padding: 5, backgroundColor: '#ffcccc', borderRadius: 5, justifyContent: 'center', borderColor: '#ff0000', borderWidth: 1 }}>
                 <Text style={{ color: '#ff0000', textAlign: 'center', fontWeight: 'bold' }}>Excluir</Text>
               </TouchableOpacity>
             </View>
@@ -78,7 +77,7 @@ export default function ListaDeTarefas({ onEdit }: { onEdit: (item: any) => void
         isVisible={showDeleteModal}
         onCancel={handleCloseDeleteModal}
         onConfirm={handleConfirmDelete}
-        taskId={taskToDeleteId}
+        taskTitle={taskToDelete?.title}
       />
     </View>
   );
