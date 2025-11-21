@@ -1,50 +1,40 @@
-# Welcome to your Expo app 👋
+# Desafio FullStack DJP
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 🚀 Sobre o desafio
 
-## Get started
+Construa uma aplicação para que possamos entender o seu nível de conhecimento em React Native.
 
-1. Install dependencies
+Mobile: A aplicação Mobile deve consumir a API disponibilizada no arquivo `server.js`
 
-   ```bash
-   npm install
-   ```
+Backend: A API deve permitir ao mobile realizar as operações de Create, Read, Update e Delete.
 
-2. Start the app
+Certifique-se de instalar as dependencias `npm install` e rodar o server: `npm start`, o server.js está devidamente documentado.
 
-   ```bash
-    npx expo start
-   ```
+**O Objetivo do teste é verificar a qualidade do código e tomada de decisões.**
 
-In the output, you'll find options to open the app in a
+## Como fazer?
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Faça um Fork deste desafio e crie o seu projeto (ou workspace) usando a sua versão desse repositório, tão logo acabe o desafio, submeta um pull request.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Requisitos
 
-## Get a fresh project
+Desenvolver uma aplicação de TODO pensando nos seguintes pontos:
 
-When you're ready, run:
+- Tecnologias: React e Redux (Mobile) / Node.JS (Backend)
+- Typescript
+- O layout deve ser responsivo
+- Styled Components e Styled System
+- CRUD de Tarefas (Criar, Listar, Editar, Deletar)
+- Opção de Completar Tarefas
 
-```bash
-npm run reset-project
-```
+**Bônus:**
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- React Navigation
+- React Hooks
+- Yarn
 
-## Learn more
+Se sentir que precisa de algo que não está especificado, pode adicionar, mas não é obrigatório. 
 
-To learn more about developing your project with Expo, look at the following resources:
+Fique a vontade para entrar em contato em caso de dúvidas :)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Boa sorte e divirta-se!!!
