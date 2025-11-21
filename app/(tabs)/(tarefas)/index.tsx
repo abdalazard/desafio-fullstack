@@ -1,26 +1,32 @@
 import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Switch } from 'react-native';
 import styles from '../../style';
-import ListaDeTarefas from '@/components/ListaDeTarefas';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import useTarefaStore from '@/hooks/store/task.store';
+import TarefasConcluidas from '@/components/TarefasConcluidas';
 
 export default function Index() {
   const router = useRouter();
   const params = useLocalSearchParams();
 
-  const { obtemTarefa, task } = useTarefaStore();
-
-  useEffect(() => {
-    if (params.id) {
-      obtemTarefa(Number(params.id));
-    }
-  }, [params.id]);
-
+  const { toggleConcluirTarefa, fetchTarefasConcluidas, obtemTarefa, task } = useTarefaStore();
   const { id } = params;
 
-  const handleEdit = (item: { id: number }) => {
-    router.push({ pathname: "/", params: { id: item.id } });
+  useEffect(() => {
+    if (id) {
+      obtemTarefa(Number(id));
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchTarefasConcluidas();
+  }, [fetchTarefasConcluidas]);
+
+  const handleToggle = async (item: any) => {
+    await toggleConcluirTarefa(item);
+    if (item.id) {
+      await obtemTarefa(item.id);
+    }
   };
 
   const handleBack = () => {
@@ -31,10 +37,40 @@ export default function Index() {
     return (
       <View style={styles.container}>
         <View style={styles.viewContainer}>
-          <Text style={styles.topView}>Editando Tarefa ID: {task?.title}</Text>
+          <Text style={styles.topView}>Detalhes da Tarefa</Text>
 
           <View style={{ padding: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{task?.title}</Text>
+            <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 30, textAlign: 'center' }}>
+              {task?.title}
+            </Text>
+
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+              padding: 15,
+              borderRadius: 10,
+              borderWidth: 1,
+              borderColor: task?.isCompleted ? "#4CAF50" : "#F44336",
+              backgroundColor: task?.isCompleted ? "#e8f5e9" : "#ffebee"
+            }}>
+
+              <Text style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                color: task?.isCompleted ? "#2E7D32" : "#C62828",
+              }}>
+                {task?.isCompleted ? "Concluída" : "Pendente"}
+              </Text>
+
+              <Switch
+                value={!!task?.isCompleted}
+                onValueChange={() => handleToggle(task)}
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={task?.isCompleted ? "#f5dd4b" : "#f4f3f4"}
+              />
+            </View>
           </View>
 
           <TouchableOpacity onPress={handleBack}>
@@ -43,16 +79,15 @@ export default function Index() {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </View >
     );
   }
 
   return (
     <View style={styles.container}>
       <View style={[styles.viewContainer]}>
-        <Text style={[styles.topView]}>Minhas Tarefas</Text>
-
-        <ListaDeTarefas onEdit={handleEdit} />
+        <Text style={[styles.topView]}>Tarefas Concluídas</Text>
+        <TarefasConcluidas />
       </View>
     </View>
   );

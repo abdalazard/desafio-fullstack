@@ -63,12 +63,34 @@ export default function ListaDeTarefas({ onEdit }: { onEdit: (item: any) => void
         data={tasks}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleOpenTaskScreen(item)} style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
-            <View>
-              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.title}</Text>
-              <Text style={{ color: '#555' }}>{item.description}</Text>
+          <TouchableOpacity
+            onPress={() => handleOpenTaskScreen(item)}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '100%',
+              padding: 15,
+              borderBottomWidth: 1,
+              borderBottomColor: '#ccc',
+              opacity: item.isCompleted ? 0.6 : 1
+            }}>
+            <View style={{ flex: 1, marginRight: 10 }}>
+              <Text style={{
+                fontWeight: 'bold',
+                fontSize: 16,
+                color: item.isCompleted ? '#888' : '#000',
+                textDecorationLine: item.isCompleted ? 'line-through' : 'none',
+              }}>
+                {item.title}
+              </Text>
+              <Text style={{
+                color: item.isCompleted ? '#aaa' : '#555',
+                textDecorationLine: item.isCompleted ? 'line-through' : 'none',
+              }}>
+                {item.description}
+              </Text>
             </View>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <TouchableOpacity onPress={() => onEdit(item)} style={{ padding: 5, backgroundColor: '#ccffcc', borderRadius: 5, marginRight: 10, justifyContent: 'center', borderColor: '#005300ff', borderWidth: 1 }}>
                 <Text style={{ color: '#005300ff', textAlign: 'center', fontWeight: 'bold' }}>Editar</Text>
               </TouchableOpacity>

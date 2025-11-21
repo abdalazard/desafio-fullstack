@@ -6,6 +6,7 @@ import API_URL from '@/utils/api';
 export const useTarefaStore = create<TaskStore>((set, get) => ({
   task: null,
   tasks: [],
+  tasksconcluidas: [],
   isLoading: false,
   error: null,
   setIsLoading: (isLoading) => set({ isLoading }),
@@ -25,6 +26,44 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
       set({ error: "Erro ao carregar a demanda" });
     } finally {
       set({ isLoading: false });
+    }
+  },
+
+  fetchTarefasConcluidas: async () => {
+    try {
+      set({ isLoading: true, error: null });
+      const response = await axios.get(`${API_URL}/tasks/concluidas`);
+
+      set({ tasksconcluidas: response.data.tasks });
+    } catch (error) {
+      console.error(error);
+      set({ error: "Erro ao carregar concluídas" });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  toggleConcluirTarefa: async (task: Task) => {
+    try {
+      const novoStatus = !task.isCompleted;
+
+      const tarefaAberta = get().task;
+      if (tarefaAberta && tarefaAberta.id === task.id) {
+        set({ task: { ...tarefaAberta, isCompleted: novoStatus } });
+      }
+      await axios.put(`${API_URL}/task/update`, {
+        id: task.id,
+        isCompleted: novoStatus
+      });
+      await get().fetchTarefasConcluidas();
+      await get().fetchTarefas();
+
+    } catch (error) {
+      console.error("Erro ao atualizar status:", error);
+      set({ error: "Erro ao atualizar status" });
+      get().fetchTarefasConcluidas();
+      get().fetchTarefas();
+      if (get().task?.id === task.id) get().obtemTarefa(task.id);
     }
   },
 
@@ -50,6 +89,7 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
       await axios.post(`${API_URL}/task/create`, {
         title,
         description,
+        isCompleted: false,
       });
 
       await get().fetchTarefas();
@@ -69,6 +109,7 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
         id,
         title,
         description,
+        isCompleted: false,
       });
 
       await get().fetchTarefas();
@@ -92,6 +133,26 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
     } catch (error) {
       console.error("Erro ao deletar tarefa:", error);
       set({ error: "Erro ao deletar tarefa" });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  concluirTarefa: async (id: number) => {
+    try {
+      set({ isLoading: true, error: null });
+
+      await axios.put(`${API_URL}/task/concluir`, {
+        id,
+        isCompleted: true,
+      });
+
+      set({ tasksconcluidas: get().tasksconcluidas.filter(task => task.id !== id) });
+
+      await get().fetchTarefasConcluidas();
+    } catch (error) {
+      console.error("Erro ao concluir tarefa:", error);
+      set({ error: "Erro ao concluir tarefa" });
     } finally {
       set({ isLoading: false });
     }

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'; 
+import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import useTarefaStore from '@/hooks/store/task.store';
-import styles from '@/app/style'; 
-import { X } from 'phosphor-react-native'; 
+import styles from '@/app/style';
+import { X } from 'phosphor-react-native';
 import Toast from 'react-native-toast-message';
 import { Task } from '@/hooks/store/types/task.type';
 
 export default function FormularioTarefa({ onClose, tarefa }: { onClose: () => void, tarefa: Task | null }) {
-    
+
     const [titulo, setTitulo] = useState(tarefa?.title || '');
     const [descricao, setDescricao] = useState(tarefa?.description || '');
 
     const { updateTarefa, criaTarefa, isLoading, error } = useTarefaStore();
-    
+
     useEffect(() => {
         setTitulo(tarefa?.title || '');
         setDescricao(tarefa?.description || '');
@@ -23,7 +23,7 @@ export default function FormularioTarefa({ onClose, tarefa }: { onClose: () => v
             Alert.alert("Atenção", "Preencha todos os campos!");
             return;
         }
-        
+
         try {
             if (tarefa) {
                 await updateTarefa(tarefa.id, titulo, descricao);
@@ -42,10 +42,10 @@ export default function FormularioTarefa({ onClose, tarefa }: { onClose: () => v
                     position: 'bottom',
                 });
             }
-            
+
             setTitulo('');
             setDescricao('');
-            onClose(); 
+            onClose();
 
         } catch (e) {
             if (error) {
@@ -65,11 +65,11 @@ export default function FormularioTarefa({ onClose, tarefa }: { onClose: () => v
 
 
     return (
-        <View style={styles.container}>        
+        <View style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15, borderBottomWidth: 1, borderBottomColor: '#eee' }}>
                 <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{modalTitle}</Text>
                 <TouchableOpacity onPress={onClose} style={{ padding: 5 }}>
-                    <X size={24} color="#333" /> 
+                    <X size={24} color="#333" />
                 </TouchableOpacity>
             </View>
 
@@ -86,15 +86,15 @@ export default function FormularioTarefa({ onClose, tarefa }: { onClose: () => v
                     value={descricao}
                     onChangeText={setDescricao}
                     multiline
-                    numberOfLines={5} 
+                    numberOfLines={5}
                     style={[styles.input, { height: 120, marginBottom: 15, textAlignVertical: 'top' }]}
                 />
 
-                <TouchableOpacity 
-                    onPress={handleSalvar} 
+                <TouchableOpacity
+                    onPress={handleSalvar}
                     disabled={isLoading}
                     style={{
-                        backgroundColor: isEditing ? '#FFA500' : '#000', 
+                        backgroundColor: isEditing ? '#FFA500' : '#000',
                         padding: 15,
                         borderRadius: 5,
                         alignItems: 'center'
@@ -107,7 +107,7 @@ export default function FormularioTarefa({ onClose, tarefa }: { onClose: () => v
                     )}
                 </TouchableOpacity>
             </View>
-            
+
         </View>
     );
 }
