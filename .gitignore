@@ -8,6 +8,15 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+android/
+android/app
+android/app/src
+android/app/src/main
+android/app/src/main/res
+android/app/src/main/res/mipmap-anydpi-v26
+android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+android/app/src/main/res/values-night/colors.xml
 
 # Native
 *.orig.*
