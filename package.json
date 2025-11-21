@@ -1,7 +1,7 @@
 {
   "name": "desafio-fullstack",
   "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@expo/vector-icons": "^14.0.2",
+    "@expo/vector-icons": "^14.0.4",
     "@mui/icons-material": "^6.4.3",
     "@mui/material": "^6.4.3",
     "@react-navigation/bottom-tabs": "^7.2.0",
@@ -44,7 +44,7 @@
     "phosphor-react-native": "^2.3.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-native": "0.76.7",
+    "react-native": "0.76.9",
     "react-native-flash-message": "^0.4.2",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-reanimated": "~3.16.1",

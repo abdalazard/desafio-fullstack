@@ -47,6 +47,7 @@ export default function Index() {
             <View style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
+              gap: 20,
               alignItems: 'center',
               width: '100%',
               padding: 15,

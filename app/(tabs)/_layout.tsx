@@ -39,7 +39,7 @@ export default function TabLayout() {
         name="(tarefas)/index"
         options={{
           title: 'Tarefas Concluídas',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="list.bullet" color={color} />,
           tabBarItemStyle: {
             // display: 'none',
           }

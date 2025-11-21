@@ -33,7 +33,9 @@ export default function TarefasConcluidas() {
   }
 
   return (
-    <View>
+    <View style={{ flex: 1, width: '100%' }}>
+      <Text style={{ fontSize: 20, marginTop: 80, textAlign: 'center' }}>Minhas Tarefas Concluídas</Text>
+
       {!isLoading && tasksconcluidas.length === 0 && (
         <Text style={{ color: '#555', textAlign: 'center', marginTop: '50%' }}>Nenhuma tarefa concluída ainda.</Text>
       )}
@@ -46,17 +48,18 @@ export default function TarefasConcluidas() {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              alignItems: 'center',
               width: '100%',
               padding: 15,
               borderBottomWidth: 1,
-              borderBottomColor: '#eee',
-              opacity: 0.8
+              borderBottomColor: '#ccc',
+              opacity: item.isCompleted ? 0.6 : 1
             }}
           >
             <TouchableOpacity
               onPress={() => handleOpenTaskScreen(item)}
-              style={{ flex: 1, marginRight: 10 }}
+              style={{
+                flex: 1, marginRight: 10
+              }}
             >
               <Text style={{
                 fontWeight: 'bold',
@@ -71,12 +74,7 @@ export default function TarefasConcluidas() {
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
-              <Switch
-                value={!!item.isCompleted}
-                onValueChange={() => handleToggle(item)}
-                trackColor={{ false: "#767577", true: "#4CAF50" }}
-                thumbColor={item.isCompleted ? "#8BC34A" : "#f4f3f4"}
-              />
+              <Text style={{ color: '#009c3cff', fontWeight: 'bold' }}>{item.isCompleted == true ? 'Finalizado' : ''}</Text>
             </View>
           </View>
         )}
