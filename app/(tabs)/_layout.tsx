@@ -11,30 +11,39 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Tabs 
+    <Tabs
       screenOptions={({ route }) => ({
-      tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-      headerShown: false,
-      tabBarButton: HapticTab,
-      tabBarBackground: TabBarBackground,
-      tabBarStyle: Platform.select({
-        ios: {
-          position: 'absolute',
-        },
-        default: {},
-      }),
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        headerShown: false,
+        tabBarButton: HapticTab,
+        tabBarBackground: TabBarBackground,
+        tabBarStyle: Platform.select({
+          ios: {
+            position: 'absolute',
+          },
+          default: {},
+        }),
       })}>
 
       <Tabs.Screen
-      name="(home)/index"
-      options={{
-        title: 'Inicio',
-        tabBarLabel: () => null,
-        tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        tabBarItemStyle: {
-          // display: 'none',
-        }
-      }}
+        name="(home)/index"
+        options={{
+          title: 'Inicio',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarItemStyle: {
+            // display: 'none',
+          }
+        }}
+      />
+      <Tabs.Screen
+        name="(tarefas)/index"
+        options={{
+          title: 'Tarefas Concluídas',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarItemStyle: {
+            // display: 'none',
+          }
+        }}
       />
     </Tabs>
   );

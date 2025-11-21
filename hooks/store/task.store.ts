@@ -19,7 +19,7 @@ export const useTarefaStore = create<TaskStore>((set, get) => ({
 
       const response = await axios.get(`${API_URL}/task/${taskId}`);
 
-      set({ task: response.data.task });
+      set({ task: response.data.task || response.data });
     } catch (error) {
       console.error(error);
       set({ error: "Erro ao carregar a demanda" });

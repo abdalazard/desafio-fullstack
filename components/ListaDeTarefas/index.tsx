@@ -1,8 +1,9 @@
-import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import useTarefaStore from '@/hooks/store/task.store';
 import { useEffect, useState } from 'react';
 import styles from '@/app/style';
 import ModalDeleteTask from '@/components/ModalDeleteTask';
+import { router } from 'expo-router';
 
 export default function ListaDeTarefas({ onEdit }: { onEdit: (item: any) => void }) {
 
@@ -13,7 +14,7 @@ export default function ListaDeTarefas({ onEdit }: { onEdit: (item: any) => void
 
   useEffect(() => {
     fetchTarefas();
-  }, []);
+  }, [fetchTarefas]);
 
   const handleDeletePress = (task: { id: number; title: string }) => {
     setTaskToDelete(task);
@@ -23,6 +24,13 @@ export default function ListaDeTarefas({ onEdit }: { onEdit: (item: any) => void
   const handleCloseDeleteModal = () => {
     setShowDeleteModal(false);
     setTaskToDelete(null);
+  };
+
+  const handleOpenTaskScreen = (task: { id: number; title: string }) => {
+    router.push({
+      pathname: '/(tabs)/(tarefas)',
+      params: { id: task.id, title: task.title },
+    });
   };
 
   const handleConfirmDelete = async () => {
@@ -55,7 +63,7 @@ export default function ListaDeTarefas({ onEdit }: { onEdit: (item: any) => void
         data={tasks}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
+          <TouchableOpacity onPress={() => handleOpenTaskScreen(item)} style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
             <View>
               <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.title}</Text>
               <Text style={{ color: '#555' }}>{item.description}</Text>
@@ -69,7 +77,7 @@ export default function ListaDeTarefas({ onEdit }: { onEdit: (item: any) => void
                 <Text style={{ color: '#ff0000', textAlign: 'center', fontWeight: 'bold' }}>Excluir</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
       />
 
